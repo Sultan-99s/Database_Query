@@ -1,0 +1,201 @@
+1. What is the address, district and phone number of each of the customers?
+
+USE sakila;
+SELECT CONCAT(first_name, " ", last_name) AS Name, address, district, phone
+FROM customer, address
+WHERE customer.address_id = address.address_id;
+
+
+
+
+
+2.What is the city and country of each of the customers?
+
+USE sakila;
+SELECT CONCAT(first_name, " ", last_name) AS Name, city, country
+FROM customer, address, city, country
+WHERE customer.address_id = address.address_id 
+AND address.city_id = city.city_id 
+AND city.country_id = country.country_id;
+
+
+
+3. List all the films by every actor
+
+USE sakila;
+SELECT title, CONCAT(first_name, " ", last_name) AS Name
+FROM actor, film, film_actor
+WHERE actor.actor_id = film_actor.actor_id AND film_actor.film_id = film.film_id;
+
+
+
+4. Display the first and last name of each actor in a single column in upper case letters
+
+USE sakila;
+SELECT 	UPPEER(CONCAT(first_name, " ", last_name)) AS Name
+FROM actor;
+
+
+
+
+
+5. Show “The capital of A is B” where A is the name of country and B is its capital from country
+table-
+a. In upper case
+	USE world;
+	SELECT UPPER(CONCAT('The capital of ', `Name`, ' is ',Capital)) AS 'Name with Capital'
+	FROM country;
+
+
+
+
+b. Lower case
+	USE world;
+	SELECT LOWER(CONCAT('The capital of ', `Name`, ' is ',Capital)) AS 'Name with Capital'
+	FROM country;
+
+
+
+
+
+6. What is the length of the password of the account of each staff?
+
+USE sakila;
+SELECT CONCAT(first_name, " ", last_name) AS Name, LENGTH(`password`)
+FROM staff;
+
+
+
+
+
+
+7. What is the length of the email address of the customers without domain name?
+USE sakila;
+SELECT CONCAT(first_name, " ", last_name) AS Name, instr(email, ‘@’) AS “Email length”
+FROM customer;
+
+
+
+
+8. Round the population of the countries in million
+
+USE world;
+SELECT Name, ROUND(population/1000000, 2) AS "Population(M)"
+FROM country;
+
+
+
+
+
+9. Show the life expectancy in years only for each continent
+
+	USE world;
+	SELECT Continent, AVG(LifeExpectancy) AS "LifeExpectancy"
+	FROM country
+	GROUP BY Continent;
+
+
+
+
+
+
+10. What is your age in months? 
+
+SELECT TRUNCATE((DATEDIFF(CURDATE(),'2000-12-15')/365) * 12,0) 
+AS "Age(in month)";
+
+
+
+
+11. What is the date after 167 days?
+
+SELECT DATE_ADD(CURDATE(),INTERVAL 167 DAY);
+
+
+
+
+12. What is the total population of each district? (Use city table)
+
+USE world;
+SELECT district, population
+FROM city;
+
+
+
+
+
+13. How many districts in each country? (Use city table)
+
+USE world;
+SELECT CountryCode, COUNT(District) AS 'District Count'
+FROM city
+-- WHERE city.CountryCode = country.Code
+GROUP BY countrycode;
+
+
+
+
+
+
+14. What is the total population of each continent?
+
+USE world;
+SELECT Continent, Population
+FROM country
+GROUP BY Continent;
+
+
+
+
+
+15. Which country has the maximum population?
+
+	USE world;
+	SELECT `Name`, MAX(Population)
+	FROM country;
+
+
+
+
+
+
+16. What is the average population of the world?
+
+	USE world;
+	SELECT AVG(Population)
+	FROM country;
+
+
+
+17. What is the minimum life expectancy of the world?
+
+	USE world;
+	SELECT `Name`, MIN(LifeExpectancy)
+	FROM country;
+
+
+
+
+18. How many actors acted in each film?
+
+USE sakila;
+SELECT Title, count(actor_id) AS 'Number of actress'
+FROM film_actor, film
+WHERE film_actor.film_id = film.film_id
+GROUP BY title;
+
+
+
+
+19. What is the minimum length of a film?
+
+USE sakila;
+SELECT Title, MIN(length)
+FROM film;
+
+
+20. What is the average rating of the film?
+
+USE sakila;
+SELECT AVG(rating)
+FROM film;
