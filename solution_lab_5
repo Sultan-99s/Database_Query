@@ -1,0 +1,156 @@
+1. Select all districts with language, and percentage information (from city and countrylanguage table).
+
+USE world;
+SELECT district, language, percentage
+	FROM city 
+		JOIN countrylanguage USING(countryCode);
+
+
+
+2. Select all cities, districts with capital information
+
+USE world;
+SELECT city.name, district, capital
+FROM city 
+	INNER JOIN country 
+		ON city.countryCode = country.code;
+
+
+
+
+3 Select all actors’ name with films’ title information
+
+USE sakila;
+SELECT CONCAT(first_name," ", last_name) AS name, title
+FROM actor 
+	INNER JOIN film_actor using(actor_id) 
+		INNER JOIN film using(film_id);
+
+
+
+4. Select all the customers’ information along with their address and city name.
+
+USE sakila;
+SELECT *
+FROM customer 
+	JOIN address USING(address_id) 
+		JOIN city USING(city_id);
+
+
+
+
+5. Select all the city and country name and any possible customers' name
+USE sakila;
+SELECT city, country, concat(first_name, " ", last_name) AS Name
+FROM city 
+	JOIN country USING(country_id) 
+		JOIN address USING(city_id) 
+			LEFT JOIN customer USING(address_id);
+
+
+
+6. Select all the films’ title and any possible actors’ name
+
+USE sakila;
+SELECT title, CONCAT(first_name, " ",last_name) AS name
+FROM film 
+	INNER JOIN film_actor USING(film_id) 
+		LEFT JOIN actor USING(actor_id);
+
+
+
+
+
+7. Select all the actors’ name and any possible film, they might cast
+
+USE sakila;
+SELECT CONCAT(first_name, " ",last_name) AS name,  title
+FROM film 
+	INNER JOIN film_actor USING(film_id) 
+		RIGHT JOIN actor USING(actor_id);
+
+
+
+
+8. Select all the films’ title and all the actors’ name
+
+USE sakila;
+SELECT title, CONCAT(first_name, " ",last_name) AS name
+FROM film 
+  JOIN film_actor
+	FULL JOIN actor;
+
+
+
+
+
+9. Select all the customers’ name and all the cities and districts
+
+USE sakila;
+SELECT CONCAT(first_name," ",last_name) AS name, city, address, district
+FROM customer
+	FULL JOIN city, address;
+
+
+
+
+
+10. Select all the countries and all the cities name
+
+USE sakila;
+SELECT country, city
+FROM country FULL JOIN city;
+
+
+
+11. Create a view named my_actor_film_view having first_name, last_name, title, length, and rating as its columns.
+
+USE sakila;
+CREATE VIEW my_actor_film_view AS
+SELECT first_name, last_name, title, length, rating
+	FROM ((actor
+		JOIN film_actor USING(actor_id))
+			JOIN film USING(film_id));
+
+SELECT * FROM my_actor_film_view;
+
+
+
+
+
+
+12. Show the max length from your view
+
+SELECT MAX(length) AS "MAX_Length" 
+FROM my_actor_film_view;
+
+
+
+
+13. Sort the list of the films based on the titles
+
+SELECT distinct title
+ FROM my_actor_film_view
+ ORDER BY title;
+
+
+
+
+
+14. Show average rating of films by each actor
+
+SELECT CONCAT(first_name, " ", last_name) As Name, ROUND( AVG(rating), 2) AS Rating
+ FROM my_actor_film_view
+ GROUP BY Name;
+
+
+
+
+15. Show total film of each actor
+SELECT CONCAT(first_name, " ", last_name) As Name, COUNT(title) AS Count
+ FROM my_actor_film_view
+ GROUP BY Name;
+
+
+
+
