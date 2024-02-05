@@ -1,0 +1,217 @@
+1.
+USE sakila;
+
+SELECT first_name, last_name
+FROM actor;
+
+
+
+2.
+USE sakila;
+
+SELECT country_id, country
+FROM country;
+
+
+3.
+USE sakila;
+
+SELECT CONCAT(first_name, " " ,last_name) AS “Name”, email, address_id, username
+FROM staff;
+
+
+
+4.
+USE world;
+
+SELECT `name`, district, population
+FROM city;
+
+
+
+5.
+USE sakila;
+
+SELECT first_name AS 'First Name', last_name AS 'Last Name'
+FROM actor;
+
+
+7. 
+USE sakila;
+
+SELECT CONCAT(first_name," ",last_name) AS “Name”
+FROM customer;
+
+
+
+8.
+USE sakila;
+
+SELECT DISTINCT first_name
+FROM actor;
+
+
+
+9.
+USE sakila;
+
+SELECT * 
+FROM film LIMIT 5;
+
+
+
+10.
+USE world;
+
+SELECT Name, Population/1000000 AS "Population(M)"
+FROM country;
+
+
+
+11.
+USE world;
+
+SELECT CONCAT(name," country has ", population, " population ") AS "Country Population"
+FROM country;
+
+
+
+12.
+USE sakila;
+
+SELECT CONCAT(title," is released in the year ",release_year) AS "Film release"
+FROM film;
+
+
+13.
+USE world;
+
+SELECT Name, ( Population / SurfaceArea ) AS "population per surface area"
+FROM country;
+
+
+
+
+14.
+USE world;
+
+SELECT name, District
+FROM city WHERE name="Hamilton";
+
+
+
+15.
+USE world;
+
+SELECT Name, CountryCode, Population
+FROM city WHERE name="Thimphu";
+
+
+16.
+USE world;
+
+SELECT Name, GNP, Continent
+FROM country WHERE name="Eritrea";
+
+
+17.
+USE world;
+
+SELECT Name, Capital
+FROM country WHERE name="Croatia";
+
+
+
+18.
+USE world;
+
+SELECT Distinct Region
+FROM country ;
+
+
+
+19.
+USE sakila;
+
+SELECT title, length
+FROM film WHERE length >= 100 AND length <= 200;
+
+
+
+20.
+USE sakila;
+
+SELECT title, replacement_cost
+FROM film WHERE replacement_cost >= 20;
+
+
+
+21.
+USE world;
+
+SELECT *
+FROM country WHERE Name LIKE '%s_';
+
+
+
+22.
+USE world;
+
+SELECT *
+FROM city WHERE `name` LIKE '%_y';
+
+
+
+23.
+USE world;
+
+SELECT Name
+FROM country WHERE GNPOld IS  null;
+
+
+
+24.
+USE world;
+
+SELECT Name, GNP
+FROM country WHERE GNPOld IS  null AND GNP > 3000;
+
+
+
+25.
+USE world;
+
+SELECT *
+FROM country WHERE Continent="Asia" AND Population > 100000;
+
+
+
+26.
+USE sakila;
+
+SELECT title
+FROM film ORDER BY title;
+
+
+27.
+USE sakila;
+
+SELECT title, length
+FROM film ORDER BY length;
+
+
+
+28.
+USE world;
+
+SELECT Name, Population
+FROM city ORDER BY Population desc;
+
+
+
+30.
+USE world;
+
+SELECT Name, (Population / SurfaceArea) AS “Density”
+FROM country ORDER BY (Population / SurfaceArea) desc;
+
