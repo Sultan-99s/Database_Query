@@ -1,0 +1,139 @@
+1.  List the title and length of the films which have more length than the average length.
+USE sakila;
+SELECT title, length 
+FROM film 
+WHERE length > (SELECT avg(length) FROM film);
+
+
+
+2. Show all the details of the films which have max length.
+USE sakila;
+SELECT * 
+FROM film 
+WHERE length = (SELECT max(length) FROM film);
+
+
+
+
+3. Show all the details of the films which have min length.
+USE sakila;
+SELECT * 
+FROM film 
+WHERE length = (SELECT MIN(length) FROM film);
+
+
+
+
+4. List the staff who had dealings with the customer in active store.
+USE sakila;
+SELECT * 
+FROM staff 
+WHERE active 
+IN (SELECT activeFROM customer WHERE active = 1);
+
+
+
+5. Show all the details of the actors casted in film with id 2.
+SELECT *
+FROM actor
+WHERE actor_id 
+IN (SELECT actor_id FROM film_actor WHERE film_id = 2);
+
+
+
+
+6. Show all the details of the actors casted in the film “AFRICAN EGG”.
+SELECT *
+FROM actor
+WHERE actor_id 
+IN (SELECT actor_id FROM film_actor 
+WHERE film_id = (SELECT film_id FROM film WHERE title = "AFRICAN EGG"));
+
+
+
+
+7. Show all the details of the actors casted in the film with minimum length.
+SELECT *
+FROM actor
+WHERE actor_id 
+IN (SELECT actor_id FROM film_actor WHERE film_id 
+IN (SELECT film_id FROM film WHERE length = (SELECT MIN(length) FROM film)));
+
+
+
+
+8. Show all the movies of the actor with last name “NICHOLSON”.
+USE sakila;
+SELECT title AS Movie 
+ FROM film WHERE film_id 
+	IN (SELECT film_id FROM film_actor WHERE actor_id 
+		IN (SELECT actor_id FROM actor WHERE last_name = "NICHOLSON"));
+
+
+
+9. List the name and continent of the countries whose language is Dutch.
+USE world;
+SELECT `Name`, Continent
+FROM country
+WHERE `Code` 
+IN (SELECT CountryCode FROM countrylanguage WHERE `Language`="Dutch");
+
+
+
+
+10. Show all the details of the countries which have min population.
+USE world;
+SELECT *
+FROM country
+WHERE Population = (SELECT MIN(Population) FROM country);
+
+
+
+
+11. Show all the details of the countries which have max GNP.
+USE world;
+SELECT *
+FROM country
+WHERE GNP = (SELECT MAX(GNP) FROM country);
+
+
+
+
+12. List the city and districts whose language is Arabic.
+USE world;
+SELECT `Name` AS City, District
+FROM city
+WHERE CountryCode 
+	IN (SELECT CountryCode FROM countrylanguage WHERE `Language` = "Arabic");
+
+
+
+13. Show all the details of the city which are above average population.
+USE world;
+SELECT *
+FROM city
+WHERE Population > (SELECT AVG(Population) FROM city);
+
+
+
+
+14. Which cities have more than average GNP?
+USE world;
+SELECT `Name`
+FROM city
+WHERE CountryCode 
+IN (SELECT `Code` FROM country 
+			WHERE GNP > (SELECT AVG(GNP) FROM country));
+
+
+
+
+15. Which districts have minimum life expectancy?
+USE world;
+SELECT DISTINCT District
+FROM city
+WHERE CountryCode 
+IN (SELECT `Code` FROM country 
+			WHERE LifeExpectancy = (SELECT MIN(LifeExpectancy) FROM country));
+
+
